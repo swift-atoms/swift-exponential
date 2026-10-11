@@ -12,14 +12,14 @@ let package = Package(
     dependencies: [],
     targets: [
         .target(name: "Exponential", dependencies: [], path: "Sources/Exponential"),
-        .target(name: "Exponential Foundation Integration", dependencies: ["Exponential"], path: "Sources/Exponential Foundation Integration"),
-        .target(name: "Exponential Test Support", dependencies: ["Exponential"], path: "Tests/Support"),
-        .testTarget(name: "Exponential Tests", dependencies: ["Exponential", "Exponential Foundation Integration", "Exponential Test Support"], path: "Tests/Exponential Tests"),
+        .target(name: "Exponential Foundation Integration", dependencies: [.target(name: "Exponential")], path: "Sources/Exponential Foundation Integration"),
+        .target(name: "Exponential Test Support", dependencies: [.target(name: "Exponential")], path: "Tests/Support"),
+        .testTarget(name: "Exponential Tests", dependencies: [.target(name: "Exponential"), .target(name: "Exponential Test Support")], path: "Tests/Exponential Tests"),
     ],
     swiftLanguageModes: [.v6]
 )
 
-for target in package.targets where ![.system, .binary, .plugin].contains(target.type) {
+for target in package.targets where ![.system, .binary, .plugin, .macro].contains(target.type) {
     target.swiftSettings = (target.swiftSettings ?? []) + [
         .strictMemorySafety(),
         .enableUpcomingFeature("ExistentialAny"),
