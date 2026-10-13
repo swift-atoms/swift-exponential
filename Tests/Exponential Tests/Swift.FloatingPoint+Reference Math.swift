@@ -40,6 +40,26 @@ extension Swift::Float: Exponential.`Protocol` {
     public static func log2(_ x: Float) -> Float { Glibc.log2f(x) }
     public static func log10(_ x: Float) -> Float { Glibc.log10f(x) }
 }
+#elseif canImport(ucrt)
+import ucrt
+extension Swift::Double: Exponential.`Protocol` {
+    public static func exp(_ x: Double) -> Double { ucrt.exp(x) }
+    public static func expm1(_ x: Double) -> Double { ucrt.expm1(x) }
+    public static func exp2(_ x: Double) -> Double { ucrt.exp2(x) }
+    public static func log(_ x: Double) -> Double { ucrt.log(x) }
+    public static func log1p(_ x: Double) -> Double { ucrt.log1p(x) }
+    public static func log2(_ x: Double) -> Double { ucrt.log2(x) }
+    public static func log10(_ x: Double) -> Double { ucrt.log10(x) }
+}
+extension Swift::Float: Exponential.`Protocol` {
+    public static func exp(_ x: Float) -> Float { ucrt.expf(x) }
+    public static func expm1(_ x: Float) -> Float { ucrt.expm1f(x) }
+    public static func exp2(_ x: Float) -> Float { ucrt.exp2f(x) }
+    public static func log(_ x: Float) -> Float { ucrt.logf(x) }
+    public static func log1p(_ x: Float) -> Float { ucrt.log1pf(x) }
+    public static func log2(_ x: Float) -> Float { ucrt.log2f(x) }
+    public static func log10(_ x: Float) -> Float { ucrt.log10f(x) }
+}
 #else
 #error("A test-only reference math backend is required on this platform")
 #endif
